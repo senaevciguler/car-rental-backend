@@ -1,4 +1,7 @@
 package com.honeymoney.honeymoney.models;
 
-public class Office {
+public enum Office {
+    TALLINN,
+    TARTU,
+    PÄRNU;
 }

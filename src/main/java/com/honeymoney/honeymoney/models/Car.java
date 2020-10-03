@@ -1,11 +1,16 @@
 package com.honeymoney.honeymoney.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
+@Builder
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "car")
@@ -14,7 +19,6 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "model")
     private String model;
     @Column(name = "bodyType")
@@ -25,6 +29,18 @@ public class Car {
     private String color;
     @Column(name = "mileage")
     private int mileage;
+    /*
     @Column(name = "availability")
     private boolean availability;
+    */
+    @Column(name="checkInDate")
+    private Date checkInDate;
+    @Column(name="checkOutDate")
+    private Date checkOutDate;
+    @Column(name="office")
+    private Office office;
+
+    @Lob
+    @Column(name = "photo")
+    private byte[] photo;
 }
