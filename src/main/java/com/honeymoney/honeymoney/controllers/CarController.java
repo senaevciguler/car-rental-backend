@@ -58,11 +58,11 @@ public class CarController {
             car.setColor(updateCar.getColor());
             car.setCheckInDate(updateCar.getCheckInDate());
             car.setCheckOutDate(updateCar.getCheckOutDate());
-            car.setOffice(updateCar.getOffice());
             car.setBodyType(updateCar.getBodyType());
             car.setMileage(updateCar.getMileage());
             car.setModel(updateCar.getModel());
             car.setYear(updateCar.getYear());
+            car.setPrice(updateCar.getPrice());
             return carRepository.save(car);
         }).orElseGet(() -> {
             updateCar.setId(id);
@@ -77,13 +77,13 @@ public class CarController {
     @PostMapping("/cars")
     public Result createCar(@RequestBody CarDto carDto) {
         Car car = Car.builder()
-                .office(carDto.getOffice())
                 .checkInDate(carDto.getCheckInDate())
                 .checkOutDate(carDto.getCheckOutDate())
                 .bodyType(carDto.getBodyType())
                 .color(carDto.getColor())
                 .mileage(carDto.getMileage())
                 .model(carDto.getModel())
+                .price(carDto.getPrice())
                 //.photo(carDto.getPhoto()!=null? carDto.getPhoto().getBytes():null)
                 .year(carDto.getYear())
                 .build();

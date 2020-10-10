@@ -24,11 +24,11 @@ public class Car {
     @Column(name = "bodyType")
     private String bodyType;
     @Column(name = "year")
-    private int year;
+    private Long year;
     @Column(name = "color")
     private String color;
     @Column(name = "mileage")
-    private int mileage;
+    private Long mileage;
     /*
     @Column(name = "availability")
     private boolean availability;
@@ -37,8 +37,8 @@ public class Car {
     private Date checkInDate;
     @Column(name="checkOutDate")
     private Date checkOutDate;
-    @Column(name="office")
-    private Office office;
+    @Column(name="price")
+    private Long price;
 
     @Lob
     @Column(name = "photo")

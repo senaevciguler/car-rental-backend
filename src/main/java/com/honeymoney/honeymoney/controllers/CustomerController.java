@@ -1,6 +1,7 @@
 package com.honeymoney.honeymoney.controllers;
 
 import com.honeymoney.honeymoney.dto.CustomerDto;
+import com.honeymoney.honeymoney.models.Car;
 import com.honeymoney.honeymoney.models.Customer;
 import com.honeymoney.honeymoney.repositories.CustomerRepository;
 import com.honeymoney.honeymoney.utils.Result;
@@ -8,12 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -71,6 +76,17 @@ public class CustomerController {
                 .lastName(customerDto.getLastName())
                 .customerId(customerDto.getCustomerId())
                 .build();
+
+        return Result.Success.builder()
+                .message("Customer saved successfully")
+                .payload(customerRepository.save(customer))
+                .build();
+    }
+
+    @PostMapping("/customers/image/{id}")
+    public Result createCustomer(@PathVariable long id,  @ModelAttribute MultipartFile file) throws IOException {
+        Customer customer = customerRepository.getOne(id);
+        customer.setPhoto(file.getBytes());
 
         return Result.Success.builder()
                 .message("Customer saved successfully")

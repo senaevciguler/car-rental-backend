@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 
@@ -30,5 +31,9 @@ public class Customer {
     private String lastName;
     @Column(name = "customerId")
     private int customerId;
+
+    @Lob
+    @Column(name = "photo")
+    private byte[] photo;
 
 }

@@ -21,12 +21,12 @@ public class CarDto implements Serializable {
     private Long id;
     private String model;
     private String bodyType;
-    private int year;
+    private Long year;
     private String color;
-    private int mileage;
+    private Long mileage;
     private boolean availability;
-    private Office office;
     private Date checkInDate;
     private Date checkOutDate;
+    private Long price;
     //private MultipartFile photo;
 }
