@@ -12,19 +12,13 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CarDto implements Serializable {
+public class BookingPostDto implements Serializable {
 
-    private Long id;
-    private String model;
-    private String bodyType;
-    private Long year;
-    private String color;
-    private Long mileage;
-    /*
-    private boolean availability;
     private Date checkInDate;
     private Date checkOutDate;
-    */
-    private Long price;
-    //private MultipartFile photo;
+    private Long car;
+    private String office;
+
+
+
 }

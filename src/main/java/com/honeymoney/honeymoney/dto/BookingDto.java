@@ -1,5 +1,8 @@
 package com.honeymoney.honeymoney.dto;
 
+import com.honeymoney.honeymoney.models.Car;
+import com.honeymoney.honeymoney.models.Customer;
+import com.honeymoney.honeymoney.models.Office;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,19 +15,14 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CarDto implements Serializable {
+public class BookingDto implements Serializable {
 
-    private Long id;
-    private String model;
-    private String bodyType;
-    private Long year;
-    private String color;
-    private Long mileage;
-    /*
-    private boolean availability;
     private Date checkInDate;
     private Date checkOutDate;
-    */
-    private Long price;
-    //private MultipartFile photo;
+    private Car car;
+    private Office office;
+
+
+
+
 }

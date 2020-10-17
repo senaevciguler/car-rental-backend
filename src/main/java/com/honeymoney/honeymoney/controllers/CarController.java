@@ -1,10 +1,14 @@
 package com.honeymoney.honeymoney.controllers;
 
 import com.honeymoney.honeymoney.dto.CarDto;
+import com.honeymoney.honeymoney.models.Booking;
 import com.honeymoney.honeymoney.models.Car;
+import com.honeymoney.honeymoney.repositories.BookingRepository;
 import com.honeymoney.honeymoney.repositories.CarRepository;
+import com.honeymoney.honeymoney.repositories.OfficeRepository;
 import com.honeymoney.honeymoney.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +18,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -28,11 +39,36 @@ public class CarController {
     @Autowired
     CarRepository carRepository;
 
+    @Autowired
+    OfficeRepository officeRepository;
+
+    @Autowired
+    BookingRepository bookingRepository;
+
 
     @GetMapping("/cars")
     public Result getCarsList() {
         return Result.Success.builder()
                 .payload(carRepository.findAll())
+                .build();
+    }
+
+
+    @GetMapping("/cars/available")
+    public Result getCarsList(@RequestParam String office,
+                              @RequestParam("checkInDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date checkInDate,
+                              @RequestParam("checkOutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date checkOutDate) {
+
+        List<Car> officesCar = (List<Car>) officeRepository.findByOfficeName(office).getCars();
+        List<Car> bookedCar = bookingRepository.findAll().stream()
+                .filter(x -> office.equals(x.getOffice().getName()) &&
+                        x.getCheckInDate().before(checkOutDate) &&
+                        x.getCheckOutDate().after(checkInDate)
+                ).map(Booking::getCar).collect(Collectors.toList());
+
+        officesCar.removeAll(bookedCar);
+        return Result.Success.builder()
+                .payload(officesCar)
                 .build();
     }
 
@@ -56,8 +92,8 @@ public class CarController {
 
         Car updatedCar = carRepository.findById(id).map(car -> {
             car.setColor(updateCar.getColor());
-            car.setCheckInDate(updateCar.getCheckInDate());
-            car.setCheckOutDate(updateCar.getCheckOutDate());
+            //car.setCheckInDate(updateCar.getCheckInDate());
+            //car.setCheckOutDate(updateCar.getCheckOutDate());
             car.setBodyType(updateCar.getBodyType());
             car.setMileage(updateCar.getMileage());
             car.setModel(updateCar.getModel());
@@ -77,8 +113,8 @@ public class CarController {
     @PostMapping("/cars")
     public Result createCar(@RequestBody CarDto carDto) {
         Car car = Car.builder()
-                .checkInDate(carDto.getCheckInDate())
-                .checkOutDate(carDto.getCheckOutDate())
+               // .checkInDate(carDto.getCheckInDate())
+                //.checkOutDate(carDto.getCheckOutDate())
                 .bodyType(carDto.getBodyType())
                 .color(carDto.getColor())
                 .mileage(carDto.getMileage())

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,5 +13,5 @@ import java.util.Collection;
 public class OfficeDto {
     private Long id;
     private String name;
-    private Collection<Car> cars;
+    private List<Car> cars;
 }

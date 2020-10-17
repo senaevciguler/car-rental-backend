@@ -1,5 +1,6 @@
 package com.honeymoney.honeymoney.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,26 +11,35 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+import java.util.Date;
 
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "customer")
-public class Customer {
+@Table(name = "booking")
+public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "lastName")
-    private String lastName;
 
+    @Column(name="checkInDate")
+    private Date checkInDate;
+    @Column(name="checkOutDate")
+    private Date checkOutDate;
 
+    @JsonIgnore
+    @ManyToOne
+    private Car car;
 
+    @JsonIgnore
+    @ManyToOne
+    private Office office;
+
+    @ManyToOne
+    private Customer customer;
 }
