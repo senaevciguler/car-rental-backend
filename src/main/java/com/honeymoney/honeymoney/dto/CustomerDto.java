@@ -11,7 +11,8 @@ public class CustomerDto {
 
     private Long id;
     private String name;
+    private String username;
     private String lastName;
-    private int customerId;
+    private String password;
     //private List<Booking> bookings;
 }

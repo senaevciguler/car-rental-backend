@@ -53,6 +53,7 @@ public class CustomerController {
         Customer updatedCustomer = customerRepository.findById(id).map(customer -> {
             customer.setName(updateCustomer.getName());
             customer.setLastName(updateCustomer.getLastName());
+            customer.setPassword(updateCustomer.getPassword());
             //customer.setCustomerId(updateCustomer.getCustomerId());
            // customer.setBookings(updateCustomer.getBookings());
             return customerRepository.save(customer);
@@ -71,6 +72,7 @@ public class CustomerController {
         Customer customer = Customer.builder()
                 .name(customerDto.getName())
                 .lastName(customerDto.getLastName())
+                .password(customerDto.getPassword())
                 //.customerId(customerDto.getCustomerId())
                 .build();
 
